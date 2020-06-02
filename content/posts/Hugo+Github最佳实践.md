@@ -12,9 +12,203 @@ categories:
 
 不废话，跟着动起来。
 
+# 快捷入口
+
+访问 https://github.com/star-royce/royce-hugo, star&fork后clone到本地，直接进入**Hugo 本地项目配置** 阶段
+
+# 白手起家
 ## GitHub Page 准备
 
 1. github 账号注册登录
-2. 初始化一个仓库，用于承载未来的博客网站Html文件
-![avatar](/images/md/hugo/repostory_prepare.jpg)
+2. 初始化一个仓库，用于承载未来的博客网站Html文件(**必须公开，必须初始化README.md**)
+![repostory](/images/md/hugo/repostory_prepare.jpg)
 3. 使用 github page 功能
+  - 进入setting页
+  ![setting](/images/md/hugo/into_setting.png)
+  - 找到GitHub Pages，选择Choose a theme(随便选，只要是拿到托管的网址)
+  ![pages](/images/md/hugo/github_page_config.png)
+  - Commit README.md
+
+  ```
+  选择一个theme后,会自动生成README.md内容，并跳转到提交页
+  这也是为什么一开始初始化项目的时候必须初始化一个README.md
+  **这里的commit不能忽略**，后续网站是否能正常的应用css/js，跟这个有一定关系
+  ```
+  - 确定网址可用
+  ![url](/images/md/hugo/url_confirm.png)
+
+## 源文件项目准备
+
+用于生成的github page的项目，只能存放最终打包好的html文件，即md原始文件，hugo项目配置等，都只能存放在本地。为了解决这一问题，我们需要一个额外的远程仓库来存放这类文件。
+
+> 参考文档: https://jeshs.github.io/2019/01/hugo%E9%83%A8%E7%BD%B2%E5%88%B0github/
+
+## 远程仓库下载到本地
+
+1. git 环境安装
+2. 进入准备存放项目的根目录
+3. 执行git clone指令，将源文件项目拉取到本地。
+4. 在源文件项目根目录下，创建子模块，用于单独管理打包后的html文件，将其推送到GitHub Page所
+在的远程仓库。
+
+    `git submodule add -b master <xxx.io项目clone url> public`
+
+## Hugo 项目配置
+
+> 参考文档: https://juejin.im/post/5cc41bfef265da036505031c
+
+#### 1. Hugo下载安装
+
+  - 安装包方式: https://github.com/gohugoio/hugo/releases
+  - HomeBrew(**仅Mac**): `brew install hugo`
+  - Windows10安装, 参考文档: https://www.gohugo.org/doc/tutorials/installing-on-windows/
+
+  ```
+  下载得到zip文件
+  将zip文件放置到预期存放hugo的问题, 如"D:\Hugo\Sites"
+  解压至当前文件夹，确定exe文件的名称，确保为hugo.exe，如果不是，请重命名
+  将"D:\Hugo\Sites"配置到环境变量中
+
+  **PS: 如果是fork我的项目，直接从 6. 主题添加 - config.toml 文件配置 开始继续后续配置即可**
+  ```
+#### 2. 进入下载下来的源文件项目根路径
+
+#### 3. 执行hugo执行，生成项目所需文件，项目名可自定义，如blog
+
+  `hugo new site <自定义项目名，如blog>`
+
+#### 4. 创建完成后，会把blog作为根目录文件夹，然后在该文件夹下会生成以下文件结构。
+```
+├── archetypes # 存放生成博客的模版
+├── assets # 存放被 Hugo Pipes 处理的文件
+├── config # 存放 hugo 配置文件 支持 JSON YAML TOML 三种格式配置文件
+├── content # 存放 markdown 文件
+├── data # 存放 Hugo 处理的数据
+├── layouts # 存放布局文件
+├── static # 存放静态文件 图片 CSS JS文件
+└── themes # 存放主题
+```
+
+#### 5. 目录结构调整
+因为我们计划是用一个源文件项目来存放这些文件，所以多了一层目录结构可能不太友好。可以考虑在源文件项目根路径下执行以下命令。(非必须操作，但后续步骤是假设已经做了第5步操作的前提下。如果没做，涉及目录问题，需要多进入一层目录。)
+```
+cp blog/ ./
+rm -rf blog
+```
+#### 6. 主题添加
+
+  - **以下操作默认起点是在源文件项目跟路径**
+  - 因为hugo默认是没有主题，所以必须先下载主题
+  - 当前选用LeaveIt主题，可以到 https://themes.gohugo.io/ 挑选自己满意的主题，但是后续提及的主题配置，可能就不适用。
+  - 将主题下载到themes文件夹中
+  `git clone https://github.com/liuzc/LeaveIt.git theme/`
+  - 删除.git文件，避免git冲突
+  `rm -rf theme/LeaveIt/.git`
+  - 主题应用
+  ```
+  # 基础配置文件，指定所用主题，以及主题一些关键信息
+  cp themes/LeaveIt/exampleSite/config.toml ./
+  # 用于存放md文件
+  cp -rf themes/LeaveIt/exampleSite/content/ ./content/
+  # 静态资源文件，主要是使用image
+  cp -rf themes/LeaveIt/exampleSite/static ./
+  ```
+
+## 主题配置
+  #### 1. config.toml 文件配置
+  ```
+  baseURL = "实际Github Page生成的网站地址"
+  languageCode = "zh-cn" # 指定为中文
+  defaultContentLanguage = "zh-cn" #指定为中文
+  hasCJKLanguage = true # 开启可以让「字数统计」统计汉字
+  title = "TODO" # 网站标题
+  theme = "LeaveIt" # 所用主题
+  [Permalinks]
+   posts = "/:year/:month/:slug/" # 分享链接，相比默认值，增加了:slug，主要是避免链接带了中文，但需要md文件上的Front Matter配置
+  [params]
+    "这下面的的配置影响界面展示，可以改了结合本地网站查看效果"
+  [params.social]
+    # 这里影响的是首页的关联地址
+      GitHub = "star-royce"
+      Email   = "private.royce@gmail.com"
+      Wechat = ""  # Wechat QRcode image
+    # 新增配置，标注作者
+  [author]
+      name = "royce.li"
+      [params.publisher]
+        name = "royce.li"
+  ```
+  #### 2. HTML文件自定义修改
+  ```
+  待补充。。。
+  ```
+
+## MarkDown 文件编辑
+  - 新建一个md文档 `hugo new posts/my-first-blog.md`, 配置Front Matter填充一定内容，用于测试页面效果
+  ![url](/images/md/hugo/front_matter.png)
+> Front Matter参考文档： https://gohugo.io/content-management/front-matter/> <br/> 配置默认模板，可以编辑 /archetypes/default.md 文件
+
+## Hugo 项目部署
+
+  1. 回到项目根路径，执行 `hugo server -w`, 启动成功后，访问相应地址即可
+  ![url](/images/md/hugo/hugo_run.png)
+  2. GitHub Pages 网站部署
+    - 确定本地网站正常后，执行 `hugo` 打包静态html，此时会把内容输入到 "public"文件夹中
+    - 进入public文件夹，将静态文件推送到Github Page所在项目
+    ```
+    cd public
+    git status
+    git add .
+    git commit -m "first commit static html"
+    git push
+    ```
+
+    - 访问Github Page生成的网站地址，确定网站是否正常
+
+  ```
+  接口404，尝试增加/index后缀
+  css,js文件不起效，检查config.toml的baseURL配置是否跟Github Page生成的网站地址一致
+  css,js文件依旧不起效，config.toml中尝试新增配置 `canonifyurls = true`
+  ```
+
+## Hugo 源项目备份到远程仓库
+返回根目录，保存源文件到远程仓库
+  ```
+  cd ..
+  git status
+  git add .
+  git commit -m "first commit all"
+  git push
+  ```
+
+## 一键Shell部署到github
+```
+#!/bin/bash
+# 部署到 github pages 脚本
+# 错误时终止脚本
+set -e
+
+# 打包。even 是主题
+hugo
+
+# 进入打包文件夹
+cd public
+
+# Add changes to git.
+
+git add .
+
+# Commit changes.
+msg="博客内容更新 `date`"
+if [ $# -eq 1 ]
+  then msg="$1"
+fi
+git commit -m "$msg"
+
+# 推送到github
+# nusr.github.io 只能使用 master分支
+git push
+
+# 回到原文件夹
+cd ..
+```
