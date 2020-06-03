@@ -10,31 +10,49 @@ categories:
 - Environment
 ---
 
-不废话，跟着动起来。
-
-# 快捷入口
-
-访问 https://github.com/star-royce/royce-hugo, star&fork后clone到本地，直接进入**Hugo 本地项目配置** 阶段
-
 # 白手起家
+
+## 环境准备
+
+#### 1. Hugo下载安装
+
+  - 安装包方式: https://github.com/gohugoio/hugo/releases
+  - HomeBrew(**仅Mac**): `brew install hugo`
+  - Windows10安装, 参考文档: https://www.gohugo.org/doc/tutorials/installing-on-windows/
+    - 下载得到zip文件
+    - 将zip文件放置到预期存放hugo的问题, 如"D:\Hugo\Sites"
+    - 解压至当前文件夹，确定exe文件的名称，确保为hugo.exe，如果不是，请重命名
+    - 将"D:\Hugo\Sites"配置到环境变量中
+
+
+#### 2. Git下载安装
+
+- 参考官方文档: https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git
+- HomeBrew安装(仅Mac): `brew install git`
+
+#### 3. 本地Git配置
+
+- 直接联网搜索相关文档即可.
+
 ## GitHub Page 准备
 
-1. github 账号注册登录
-2. 初始化一个仓库，用于承载未来的博客网站Html文件(**必须公开，必须初始化README.md**)
-![repostory](/images/md/hugo/repostory_prepare.jpg)
-3. 使用 github page 功能
-  - 进入setting页
-  ![setting](/images/md/hugo/into_setting.png)
-  - 找到GitHub Pages，选择Choose a theme(随便选，只要是拿到托管的网址)
-  ![pages](/images/md/hugo/github_page_config.png)
-  - Commit README.md
+#### 1. github 账号注册登录
+#### 2. 网站仓库初始化
 
-  ```
-  选择一个theme后,会自动生成README.md内容，并跳转到提交页
-  这也是为什么一开始初始化项目的时候必须初始化一个README.md
-  **这里的commit不能忽略**，后续网站是否能正常的应用css/js，跟这个有一定关系
-  ```
-  - 确定网址可用
+初始化一个仓库，用于承载未来的博客网站Html文件(**必须公开，必须初始化README.md**)
+![repostory](/images/md/hugo/repostory_prepare.jpg)
+
+#### 3. 使用 github page 功能
+- 进入setting页
+  ![setting](/images/md/hugo/into_setting.png)
+- 找到GitHub Pages，选择Choose a theme(随便选，只要是拿到托管的网址)
+  ![pages](/images/md/hugo/github_page_config.png)
+- Commit README.md
+    - 选择一个theme后,会自动生成README.md内容，并跳转到提交页
+    - 这也是为什么一开始初始化项目的时候必须初始化一个README.md
+    - **这里的commit不能忽略**，后续网站是否能正常的应用css/js，跟这个有一定关系
+
+- 确定网址可用
   ![url](/images/md/hugo/url_confirm.png)
 
 ## 源文件项目准备
@@ -45,39 +63,28 @@ categories:
 
 ## 远程仓库下载到本地
 
-1. git 环境安装
-2. 进入准备存放项目的根目录
+1. 进入准备存放项目的根目录
 3. 执行git clone指令，将源文件项目拉取到本地。
-4. 在源文件项目根目录下，创建子模块，用于单独管理打包后的html文件，将其推送到GitHub Page所
-在的远程仓库。
+4. 在源文件项目根目录下，创建子模块，用于单独管理打包后的html文件，将其推送到GitHub Page所在的远程仓库。
 
-    `git submodule add -b master <xxx.io项目clone url> public`
+    - `git submodule add -b master <xxx.io项目clone url> public`
+    - **<font color=red>执行报错</font>**, "'public' already exists in the index", 可能是因为子模块有缓存，先删除缓存即可。使用git指令 `git rm --cached public`
+    - **<font color=red>执行报错</font>**，"A git directory for 'public' is found locally with remote(s):", 是因为根目录项目已经关联过一次，需要删干净。需要在项目根目录下执行指令
+       - `rm -rf .gitmodules`, 删除.gitmodules文件
+       - `vim .git/config`, 删除 subModule配置
+       ![submodule](/images/md/hugo/config_submodule.png)
+       - `rm -rf .git/modules/path_to_submodule`, 删除本地相关文件
+       - 再次执行git submodule指令即可
 
 ## Hugo 项目配置
 
-> 参考文档: https://juejin.im/post/5cc41bfef265da036505031c
+#### 1. 进入下载下来的源文件项目根路径
 
-#### 1. Hugo下载安装
-
-  - 安装包方式: https://github.com/gohugoio/hugo/releases
-  - HomeBrew(**仅Mac**): `brew install hugo`
-  - Windows10安装, 参考文档: https://www.gohugo.org/doc/tutorials/installing-on-windows/
-
-  ```
-  下载得到zip文件
-  将zip文件放置到预期存放hugo的问题, 如"D:\Hugo\Sites"
-  解压至当前文件夹，确定exe文件的名称，确保为hugo.exe，如果不是，请重命名
-  将"D:\Hugo\Sites"配置到环境变量中
-
-  **PS: 如果是fork我的项目，直接从 6. 主题添加 - config.toml 文件配置 开始继续后续配置即可**
-  ```
-#### 2. 进入下载下来的源文件项目根路径
-
-#### 3. 执行hugo执行，生成项目所需文件，项目名可自定义，如blog
+#### 2. 执行hugo执行，生成项目所需文件，项目名可自定义，如blog
 
   `hugo new site <自定义项目名，如blog>`
 
-#### 4. 创建完成后，会把blog作为根目录文件夹，然后在该文件夹下会生成以下文件结构。
+#### 3. 创建完成后，会把blog作为根目录文件夹，然后在该文件夹下会生成以下文件结构。
 ```
 ├── archetypes # 存放生成博客的模版
 ├── assets # 存放被 Hugo Pipes 处理的文件
@@ -89,13 +96,13 @@ categories:
 └── themes # 存放主题
 ```
 
-#### 5. 目录结构调整
+#### 4. 目录结构调整
 因为我们计划是用一个源文件项目来存放这些文件，所以多了一层目录结构可能不太友好。可以考虑在源文件项目根路径下执行以下命令。(非必须操作，但后续步骤是假设已经做了第5步操作的前提下。如果没做，涉及目录问题，需要多进入一层目录。)
 ```
 cp blog/ ./
 rm -rf blog
 ```
-#### 6. 主题添加
+#### 5. 主题添加
 
   - **以下操作默认起点是在源文件项目跟路径**
   - 因为hugo默认是没有主题，所以必须先下载主题
@@ -115,7 +122,9 @@ rm -rf blog
   ```
 
 ## 主题配置
-  #### 1. config.toml 文件配置
+
+#### 1. config.toml 文件配置
+
   ```
   baseURL = "实际Github Page生成的网站地址"
   languageCode = "zh-cn" # 指定为中文
@@ -138,23 +147,82 @@ rm -rf blog
       [params.publisher]
         name = "royce.li"
   ```
-  #### 2. HTML文件自定义修改
-  ```
-  待补充。。。
-  ```
+
+#### 2. HTML文件自定义修改
+
+1. 首页头像修改
+    - 在 "static/images/me"路径下，存放想要用的头像照片
+    - 修改 "config.toml"中的`avatar = "/images/me/main.jpeg"`, 替换成想要的头像照片路径
+
+2. 首页页脚修改
+    - 网站开始运行时间及作者，需要修改 "config.toml"中的配置
+    ```
+    since = 2020
+    author = "Royce.li"    
+    ```
+    - 首页关联账号配置，见"config.toml"中的`params.social`
+    - 爱心移除以及后续listen移除(可选)
+        - 修改文件内容, `themes/LeaveIt/layouts/partials/footer.html`
+3. 文章字数及阅读时长统计
+   - 找到文件`themes/LeaveIt/layouts/_default/single.html`
+   - 新增内容
+   ```
+   # 方式1，只显示字数
+   <!-- <span class="post-word-count">, {{ .WordCount }} words</span> -->
+   # 方式2，显示字数及预估阅读时长
+   <div class="post-meta">
+       <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span>
+       <span class="post-date">共{{ .WordCount }}字</span>，阅读约
+       <span class="more-meta"> {{ .ReadingTime }} 分钟</span>
+   </div>
+   ```
+4. 文章页脚license修改
+    - 修改 "config.toml"中的 `license= 'xxxx'`
+
+  > 参考文档: https://juejin.im/post/5cc41bfef265da036505031c
 
 ## MarkDown 文件编辑
-  - 新建一个md文档 `hugo new posts/my-first-blog.md`, 配置Front Matter填充一定内容，用于测试页面效果
-  ![url](/images/md/hugo/front_matter.png)
-> Front Matter参考文档： https://gohugo.io/content-management/front-matter/> <br/> 配置默认模板，可以编辑 /archetypes/default.md 文件
+  - 新建一个md文档 `hugo new posts/my-first-blog.md`, 配置Front Matter填充一定内容，用于页面分类展示
+
+        ---
+        title: "Hugo+Github最佳实践"
+        date: 2020-06-02
+        slug: "hugo github combine"
+        draft: false
+        tags:
+        - Environment
+        - Hugo
+        categories:
+        - Environment    
+        ---
+  - 可以配置默认模版，每次用执行新建md文档时会自己生成，再根据需求稍作修改即可
+      - 编辑文件, `/archetypes/default.md`
+      - 具体内容参考下文
+
+            ---
+            title: "{{ replace .Name "-" " " | title }}"
+            date: {{ dateFormat "2006-01-02" .Date }}
+            slug: ""
+            draft: true
+            tags:
+            - Tech
+            - SelfLearning
+            categories:
+            -
+            ---
+
+> Front Matter参考文档： https://gohugo.io/content-management/front-matter/>
 
 ## Hugo 项目部署
 
-  1. 回到项目根路径，执行 `hugo server -w`, 启动成功后，访问相应地址即可
+#### 1. 本地网站检查
+- 回到项目根路径，执行 `hugo server -w`, 启动成功后，访问相应地址即可
   ![url](/images/md/hugo/hugo_run.png)
-  2. GitHub Pages 网站部署
-    - 确定本地网站正常后，执行 `hugo` 打包静态html，此时会把内容输入到 "public"文件夹中
-    - 进入public文件夹，将静态文件推送到Github Page所在项目
+
+#### 2. GitHub Pages 网站部署
+- 确定本地网站正常后，执行 `hugo` 打包静态html，此时会把内容输入到 "public"文件夹中
+- 进入public文件夹，将静态文件推送到Github Page所在项目
+
     ```
     cd public
     git status
@@ -162,14 +230,11 @@ rm -rf blog
     git commit -m "first commit static html"
     git push
     ```
+- 访问Github Page生成的网站地址，确定网站是否正常
+>1. 接口404，尝试增加/index后缀
+>2. css,js文件不起效，检查config.toml的baseURL配置是否跟Github Page生成的网站地址一致
+>3. css,js文件依旧不起效，config.toml中尝试新增配置 `canonifyurls = true`
 
-    - 访问Github Page生成的网站地址，确定网站是否正常
-
-  ```
-  接口404，尝试增加/index后缀
-  css,js文件不起效，检查config.toml的baseURL配置是否跟Github Page生成的网站地址一致
-  css,js文件依旧不起效，config.toml中尝试新增配置 `canonifyurls = true`
-  ```
 
 ## Hugo 源项目备份到远程仓库
 返回根目录，保存源文件到远程仓库
@@ -182,6 +247,9 @@ rm -rf blog
   ```
 
 ## 一键Shell部署到github
+
+可以在源项目根路径下新建一个shell脚本，内容如下，后续编写博客内容后，直接运行此脚本即可一键部署。
+
 ```
 #!/bin/bash
 # 部署到 github pages 脚本
