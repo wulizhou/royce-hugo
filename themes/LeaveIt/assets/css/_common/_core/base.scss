@@ -10,8 +10,8 @@
     src: local("Josefin Sans"), local("JosefinSans-Normal"), url("//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.eot?#iefix") format("embedded-opentype"), url("//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.woff2") format("woff2"), url("//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.woff") format("woff"), url("//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.ttf") format("truetype"), url("//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.svg#JosefinSans") format("svg");
     /* Legacy iOS */
   }
-  
-  
+
+
   /* pt-sans-regular */
   @font-face {
     font-family: "PT Sans";
@@ -22,9 +22,9 @@
     src: local("PT Sans"), local("PTSans-Normal"), url("//lib.baomitu.com/fonts/pt-sans/pt-sans-regular.eot?#iefix") format("embedded-opentype"), url("//lib.baomitu.com/fonts/pt-sans/pt-sans-regular.woff2") format("woff2"), url("//lib.baomitu.com/fonts/pt-sans/pt-sans-regular.woff") format("woff"), url("//lib.baomitu.com/fonts/pt-sans/pt-sans-regular.ttf") format("truetype"), url("//lib.baomitu.com/fonts/pt-sans/pt-sans-regular.svg#PTSans") format("svg");
     /* Legacy iOS */
   }
-  
- 
-  
+
+
+
   html {
     &::-webkit-scrollbar {
       width: 8px;
@@ -39,15 +39,26 @@
       }
     }
   }
-  
+
+  // ::selection {
+  //   background: rgba(0, 149, 255, 0.1);
+  // }
   ::selection {
-    background: rgba(0, 149, 255, 0.1);
+    background: #080808;
+	color: #FFFFFF;
   }
-  
+  ::-moz-selection {
+    background: #080808;
+    color: #FFFFFF;
+  }
+  ::-webkit-selection {
+    background: #080808;
+    color: #FFFFFF;
+  }
   html {
     font-family: "Josefin Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", STHeiti, "Microsoft Yahei", "WenQuanYi Micro Hei", Arial, Verdana, sans-serif;
   }
-  
+
   body {
     font-size: 11pt;
     font-weight: 400;
@@ -78,7 +89,7 @@
         color: $dark-font-color;
      }
   }
-  
+
   a {
     color: $light-global-link-color;
     text-decoration: none;
@@ -101,7 +112,7 @@
       }
     }
   }
-  
+
   blockquote {
     font-size: 1rem;
     display: block;
@@ -124,7 +135,7 @@
       font: 6em/1.08em 'PT Sans', sans-serif;
       color: $light-post-link-color;
       text-align: center;
-      
+
        .dark-theme &{
          color: $dark-post-link-color;
        }

@@ -23,6 +23,14 @@ categories:
     - 将zip文件放置到预期存放hugo的问题, 如"D:\Hugo\Sites"
     - 解压至当前文件夹，确定exe文件的名称，确保为hugo.exe，如果不是，请重命名
     - 将"D:\Hugo\Sites"配置到环境变量中
+  - Git Clone方式，参考文档 https://s0gohugo0io.icopy.site/getting-started/installing/
+  ```
+  mkdir $HOME/src
+  cd $HOME/src
+  git clone https://github.com/gohugoio/hugo.git
+  cd hugo
+  go install --tags extended # 如果不想/不需要Sass / SCSS支持，请删除--tags extended
+  ```
 
 
 #### 2. Git下载安装
@@ -181,14 +189,49 @@ rm -rf blog
 5. md内html语法支持
     - 新版本的 Hugo （从 version 0.6）使用的 Markdown 渲染器从 blackfriday 改成了 goldmark，默认禁止在 Markdown 中使用 raw html 代码。需要的话得自己开启
     - 在"config.toml"中新增如下配置
-    
+
           [markup]
           defaultMarkdownHandler = "goldmark"
           [markup.goldmark]
             [markup.goldmark.renderer]
               unsafe = true
 
-  > 参考文档: https://juejin.im/post/5cc41bfef265da036505031c
+6. 字体选中样式
+   - 原效果字体选中为淡蓝色，不太显眼，参考文档后进行修改，改为深黑色效果.具体操作如下
+   - 打开 `/themes/LeaveIt/assets/css/_common/_core/base.scss`, 搜索 `::selection`, 替换为
+
+            ::selection {
+              background: #080808;
+          	color: #FFFFFF;
+            }
+            ::-moz-selection {
+              background: #080808;
+              color: #FFFFFF;
+            }
+            ::-webkit-selection {
+              background: #080808;
+              color: #FFFFFF;
+            }
+7. 代码高亮样式修改
+    - 原样式的代码高亮看着不舒服，可以进行以下修改
+    - 打开 `themes/LeaveIt/assets/css/_common/_page/post.scss`, 搜索 `code:not([class])`, 替换为
+
+          code:not([class]) {
+            padding: 2px 4px;
+            color: #ef3982;
+            border-radius: 2px;
+            margin-left: 3px;
+            margin-right: 3px;
+
+            .dark-theme &:not([class]) {
+                background: #2d2d2d;
+                color: #e06c75;
+            }
+          }
+
+
+
+  > 参考文档: https://huaien.co/technology/leaveit-theme-modified-log-5-selection/
 
 ## MarkDown 文件编辑
   - 新建一个md文档 `hugo new posts/my-first-blog.md`, 配置Front Matter填充一定内容，用于页面分类展示
