@@ -10,6 +10,11 @@ categories:
 - Environment
 ---
 
+# 快捷方式
+
+1. 访问 https://github.com/star-royce/hugo-leaveIt-project
+2. 将项目clone到本地，根据README.md指引操作即可。
+
 # 白手起家
 
 ## 环境准备
@@ -69,7 +74,7 @@ categories:
 
 > 参考文档: https://jeshs.github.io/2019/01/hugo%E9%83%A8%E7%BD%B2%E5%88%B0github/
 
-## 远程仓库下载到本地
+## 源文件项目设置子模块项目
 
 1. 进入准备存放项目的根目录
 3. 执行git clone指令，将源文件项目拉取到本地。
