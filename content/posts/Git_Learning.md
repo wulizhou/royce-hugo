@@ -1,7 +1,7 @@
 ---
-title: "Hugo+Github最佳实践"
+title: "Git_Learning"
 date: 2020-06-02
-slug: "hugo github combine"
+slug: "git learning"
 draft: true
 tags:
 - Environment
