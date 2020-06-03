@@ -70,3 +70,9 @@ canonifyurls = true
 
   [params.publisher]
     name = "royce.li"
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

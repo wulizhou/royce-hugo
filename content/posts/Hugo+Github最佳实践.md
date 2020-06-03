@@ -178,6 +178,15 @@ rm -rf blog
    ```
 4. 文章页脚license修改
     - 修改 "config.toml"中的 `license= 'xxxx'`
+5. md内html语法支持
+    - 新版本的 Hugo （从 version 0.6）使用的 Markdown 渲染器从 blackfriday 改成了 goldmark，默认禁止在 Markdown 中使用 raw html 代码。需要的话得自己开启
+    - 在"config.toml"中新增如下配置
+    
+          [markup]
+          defaultMarkdownHandler = "goldmark"
+          [markup.goldmark]
+            [markup.goldmark.renderer]
+              unsafe = true
 
   > 参考文档: https://juejin.im/post/5cc41bfef265da036505031c
 
