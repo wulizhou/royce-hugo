@@ -1,4 +1,4 @@
-baseURL = "https://"
+baseURL = "https://example.com"
 languageCode = "zh-cn"
 defaultContentLanguage = "zh-cn"
 hasCJKLanguage = true # 开启可以让「字数统计」统计汉字
