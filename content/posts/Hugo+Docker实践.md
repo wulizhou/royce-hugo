@@ -14,3 +14,5 @@ categories:
 
 1. 访问 https://github.com/star-royce/royce-hugo-docker.git
 2. 将项目clone到本地，根据README.md指引操作即可。
+
+# 实践问题记录
