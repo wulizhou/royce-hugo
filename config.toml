@@ -40,7 +40,7 @@ canonifyurls = true
 
 [params]
     since = 2020
-    author = "Royce.li"                           # Author's name
+    author = "lizhou.wu"                           # Author's name
     avatar = "/images/me/main.png"           # Author's avatar
     subtitle = "想来天忧无泪落，人竟总有悲伤时"         # Subtitle
     cdn_url = ""           # Base CDN URL
