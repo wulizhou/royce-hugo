@@ -41,8 +41,8 @@ canonifyurls = true
 [params]
     since = 2020
     author = "Royce.li"                           # Author's name
-    avatar = "/images/me/main.jpeg"           # Author's avatar
-    subtitle = "随手一记，惊天动地"         # Subtitle
+    avatar = "/images/me/main.png"           # Author's avatar
+    subtitle = "想来天忧无泪落，人竟总有悲伤时"         # Subtitle
     cdn_url = ""           # Base CDN URL
     home_mode = "" # post or other
 
@@ -57,19 +57,19 @@ canonifyurls = true
     license= '可以崇拜，但请不要过度迷恋！'
 
 [params.social]
-    GitHub = "star-royce"
-    Email   = "private.royce@gmail.com"
-    Wechat = ""  # Wechat QRcode image
+    GitHub = "wulizhou"
+    Email   = "wulizhou.ct@gmail.com"
+    Wechat = "/images/me/wechat-qrcode.png"  # Wechat QRcode image
 
 [params.share]
     Douban = true
     Weibo = true
 
 [author]
-  name = "royce.li"
+  name = "lizhou.wu"
 
   [params.publisher]
-    name = "royce.li"
+    name = "lizhou.wu"
 
 [markup]
   defaultMarkdownHandler = "goldmark"
