@@ -2,7 +2,7 @@ baseURL = "http://blog.flmes.cn/"
 languageCode = "zh-cn"
 defaultContentLanguage = "zh-cn"
 hasCJKLanguage = true # 开启可以让「字数统计」统计汉字
-title = "TODO"
+title = "FLME"
 theme = "LeaveIt"
 
 paginate = 12
